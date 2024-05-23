@@ -18,7 +18,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //===========================================================================
-#include "Arduino.h"
 #include "AnimatedGIF.h"
 
 // Here is all of the actual code...
@@ -293,3 +292,4 @@ long lTime = millis();
         *delayMilliseconds = _gif.iFrameDelay;
     return (_gif.GIFFile.iPos < _gif.GIFFile.iSize-10);
 } /* playFrame() */
+

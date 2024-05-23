@@ -57,7 +57,7 @@
 #ifdef __LINUX__
 #define MAX_WIDTH 2048
 #else
-#define MAX_WIDTH 480
+#define MAX_WIDTH 320
 #endif // __LINUX__
 #define LZW_BUF_SIZE (6*MAX_CHUNK_SIZE)
 #define LZW_HIGHWATER (4*MAX_CHUNK_SIZE)
@@ -73,7 +73,7 @@
 #define MAX_HASH 5003
 // expanded LZW buffer for Turbo mode
 #define LZW_BUF_SIZE_TURBO (LZW_BUF_SIZE + (2<<MAX_CODE_SIZE) + (PIXEL_LAST*2) + MAX_WIDTH)
-#define LZW_HIGHWATER_TURBO ((LZW_BUF_SIZE_TURBO * 14) / 16)
+#define LZW_HIGHWATER_TURBO ((LZW_BUF_SIZE_TURBO * 15) / 16)
 
 //
 // Pixel types
@@ -155,17 +155,11 @@ typedef struct gif_draw_tag
 // Callback function prototypes
 typedef int32_t (GIF_READ_CALLBACK)(GIFFILE *pFile, uint8_t *pBuf, int32_t iLen);
 typedef int32_t (GIF_SEEK_CALLBACK)(GIFFILE *pFile, int32_t iPosition);
+typedef void (GIF_DRAW_CALLBACK)(GIFDRAW *pDraw);
+typedef void * (GIF_OPEN_CALLBACK)(const char *szFilename, int32_t *pFileSize);
 typedef void (GIF_CLOSE_CALLBACK)(void *pHandle);
 typedef void * (GIF_ALLOC_CALLBACK)(uint32_t iSize);
 typedef void (GIF_FREE_CALLBACK)(void *buffer);
-
-//typedef std::function<void * (const char *, int32_t *)>GIF_OPEN_CALLBACK;
-typedef void * (GIF_OPEN_CALLBACK)(const char *szFilename, int32_t *pFileSize);
-
-//typedef std::function<void(GIFDRAW *)>GIF_DRAW_CALLBACK;
-typedef void (GIF_DRAW_CALLBACK)(GIFDRAW *pDraw);
-
-
 //
 // our private structure to hold a GIF image decode state
 //
@@ -218,8 +212,8 @@ class AnimatedGIF
     int open(const char *szFilename, GIF_OPEN_CALLBACK *pfnOpen, GIF_CLOSE_CALLBACK *pfnClose, GIF_READ_CALLBACK *pfnRead, GIF_SEEK_CALLBACK *pfnSeek, GIF_DRAW_CALLBACK *pfnDraw);
     void close();
     void reset();
-    void begin(uint8_t ucPaletteType = GIF_PALETTE_RGB565_LE);
-    void begin(int iEndian, uint8_t ucPaletteType) { begin(ucPaletteType); };
+    void begin(unsigned char ucPaletteType = GIF_PALETTE_RGB565_LE);
+    void begin(int iEndian, unsigned char ucPaletteType) { begin(ucPaletteType); };
     int playFrame(bool bSync, int *delayMilliseconds, void *pUser = NULL);
     int getCanvasWidth();
     int allocTurboBuf(GIF_ALLOC_CALLBACK *pfnAlloc);
@@ -256,7 +250,7 @@ class AnimatedGIF
     int GIF_getLoopCount(GIFIMAGE *pGIF);
 #endif // __cplusplus
 
-#if (INTPTR_MAX != INT64_MAX)
+#if (INTPTR_MAX == INT64_MAX)
 #define ALLOWS_UNALIGNED
 #define INTELSHORT(p) (*(uint16_t *)p)
 #define INTELLONG(p) (*(uint64_t *)p)

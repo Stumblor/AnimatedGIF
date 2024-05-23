@@ -1477,3 +1477,4 @@ const uint32_t RBMask = 0xf81f, GMask = 0x7e0;
    } // for x
 } /* GIF_scaleHalf() */
 
+
