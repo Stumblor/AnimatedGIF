@@ -1234,7 +1234,7 @@ init_codetable:
             gd.iCanvasWidth = pImage->iCanvasWidth;
             DrawCooked(pImage, &gd, &buf[pImage->iCanvasHeight * pImage->iCanvasWidth]); // dest = past end of canvas
             gd.pPixels = &buf[pImage->iCanvasHeight * pImage->iCanvasWidth]; // point to the line we just converted
-            //(*pImage->pfnDraw)(&gd); // callback to handle this line
+            (*pImage->pfnDraw)(&gd); // callback to handle this line
         }
     }
     return iErr;
@@ -1339,9 +1339,9 @@ static void GIFMakePels(GIFIMAGE *pPage, unsigned int code)
                     DrawNewPixels(pPage, &gd); // merge the new opaque pixels
                 }
             }
-            //if (pPage->pfnDraw) {
-            //    (*pPage->pfnDraw)(&gd); // callback to handle this line
-            //}
+            if (pPage->pfnDraw) {
+                (*pPage->pfnDraw)(&gd); // callback to handle this line
+            }
             pPage->iYCount--;
             buf = pPage->ucLineBuf;
             if (pPage->iLZWOff >= LZW_HIGHWATER)

@@ -156,8 +156,8 @@ typedef struct gif_draw_tag
 typedef int32_t (GIF_READ_CALLBACK)(GIFFILE *pFile, uint8_t *pBuf, int32_t iLen);
 typedef int32_t (GIF_SEEK_CALLBACK)(GIFFILE *pFile, int32_t iPosition);
 typedef std::function<void(GIFDRAW *)>GIF_DRAW_CALLBACK;
-//typedef void (GIF_DRAW_CALLBACK)(GIFDRAW *pDraw);
-typedef std::function<void * (const char *, int32_t *)>GIF_OPEN_CALLBACK;
+typedef void (GIF_DRAW_CALLBACK)(GIFDRAW *pDraw);
+//typedef std::function<void * (const char *, int32_t *)>GIF_OPEN_CALLBACK;
 //typedef void * (GIF_OPEN_CALLBACK)(const char *szFilename, int32_t *pFileSize);
 typedef void (GIF_CLOSE_CALLBACK)(void *pHandle);
 typedef void * (GIF_ALLOC_CALLBACK)(uint32_t iSize);
