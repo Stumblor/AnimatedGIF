@@ -293,4 +293,3 @@ long lTime = millis();
         *delayMilliseconds = _gif.iFrameDelay;
     return (_gif.GIFFile.iPos < _gif.GIFFile.iSize-10);
 } /* playFrame() */
-
