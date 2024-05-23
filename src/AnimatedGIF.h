@@ -159,8 +159,8 @@ typedef void (GIF_CLOSE_CALLBACK)(void *pHandle);
 typedef void * (GIF_ALLOC_CALLBACK)(uint32_t iSize);
 typedef void (GIF_FREE_CALLBACK)(void *buffer);
 
-typedef std::function<void * (const char *, int32_t *)>GIF_OPEN_CALLBACK;
-//typedef void * (GIF_OPEN_CALLBACK)(const char *szFilename, int32_t *pFileSize);
+//typedef std::function<void * (const char *, int32_t *)>GIF_OPEN_CALLBACK;
+typedef void * (GIF_OPEN_CALLBACK)(const char *szFilename, int32_t *pFileSize);
 
 //typedef std::function<void(GIFDRAW *)>GIF_DRAW_CALLBACK;
 typedef void (GIF_DRAW_CALLBACK)(GIFDRAW *pDraw);
